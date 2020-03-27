@@ -8,7 +8,8 @@ class SignUp extends React.Component {
       lastName: "",
       password: "",
       passwordConf: "",
-      email: ""
+      email: "",
+      flash: ""
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updateNameField = this.updateNameField.bind(this);
@@ -38,10 +39,22 @@ class SignUp extends React.Component {
     this.setState({ email: e.target.value });
   }
 
-  handleSubmit(e) {
-    console.log(`A form was submitted ${JSON.stringify(this.state)}`);
+  handleSubmit = e => {
+    // console.log(`A form was submitted ${JSON.stringify(this.state)}`);
     e.preventDefault();
-  }
+    fetch("/auth/signup", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(this.state)
+    })
+      .then(res => res.json())
+      .then(
+        res => this.setState({ flash: res.flash }),
+        err => this.setState({ flash: err.flash })
+      );
+  };
 
   render() {
     return (
@@ -90,6 +103,7 @@ class SignUp extends React.Component {
           />
           <input type="submit" value="Submit" />
         </form>
+        {this.state.flash && <p>{this.state.flash}</p>}
       </React.Fragment>
     );
   }
