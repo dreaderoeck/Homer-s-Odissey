@@ -1,6 +1,6 @@
+const connection = require("../../helpers/db");
 const express = require("express");
 const router = express.Router();
-const connection = require("../../helpers/db");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -20,10 +20,10 @@ router.post("/signup", function(req, res, next) {
   ) {
     if (error) {
       console.log(error);
-      res.status(500).end();
+      res.status(500).json({ flash: error.message });
       // res.status(500).send("Error in in login");
     } else {
-      res.status(200).json(user);
+      res.status(200).json({ flash: "User has been signed up!" });
       res.end();
     }
   });
