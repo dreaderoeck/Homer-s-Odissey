@@ -1,3 +1,10 @@
 .Profile-container h1 {
   display: flex;
 }
+
+.Profile-container .profile-buttonstyle {
+  margin-top: 20px;
+  margin-right: 30px;
+  display: flex;
+  justify-content: flex-end;
+}

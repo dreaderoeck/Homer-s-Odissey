@@ -37,9 +37,11 @@ class Profile extends React.Component {
             />
           </ListItem>
         </List>
-        <Button variant="contained" color="primary">
-          <Link to="/signin">Sign Out</Link>
-        </Button>
+        <div className="profile-buttonstyle">
+          <Button variant="contained" color="primary">
+            <Link to="/signin">Sign Out</Link>
+          </Button>
+        </div>
       </div>
     );
   }

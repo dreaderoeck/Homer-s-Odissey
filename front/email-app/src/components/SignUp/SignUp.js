@@ -1,8 +1,8 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { SnackbarContent } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import "./signup.css";
 
 class SignUp extends React.Component {
@@ -14,7 +14,8 @@ class SignUp extends React.Component {
       password: "",
       passwordConf: "",
       email: "",
-      flash: ""
+      flash: "",
+      signup: false
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updateNameField = this.updateNameField.bind(this);
@@ -43,6 +44,16 @@ class SignUp extends React.Component {
   updateEmailField(e) {
     this.setState({ email: e.target.value });
   }
+
+  setSignUp = () => {
+    this.setState({ signup: true });
+  };
+
+  renderSignUp = () => {
+    if (this.state.signup) {
+      return <Redirect to="/" />;
+    }
+  };
 
   handleSubmit = e => {
     // console.log(`A form was submitted ${JSON.stringify(this.state)}`);
@@ -127,12 +138,19 @@ class SignUp extends React.Component {
               />
             </div>
             <div className="buttonstyle">
+              {this.renderSignUp()}
               <Button
                 variant="contained"
                 color="primary"
-                onClick={this.handleSubmit}
+                onClick={this.setSignUp}
               >
                 Submit
+              </Button>
+            </div>
+
+            <div className="buttonstyle">
+              <Button variant="contained" color="secondary">
+                <Link to="/signin">Sign in!!</Link>
               </Button>
             </div>
           </form>
