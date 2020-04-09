@@ -23,7 +23,10 @@ function App() {
                 // sm={6}
               >
                 <Grid item xs={12} sm={6} style={{ "text-align": "center" }}>
-                  <img src="http://images.innoveduc.fr/react_odyssey_homer/wildhomer.png" />
+                  <img
+                    src="http://images.innoveduc.fr/react_odyssey_homer/wildhomer.png"
+                    alt=""
+                  />
                 </Grid>
                 <Grid item xs={12} sm={6} alignContent="center">
                   <Router>

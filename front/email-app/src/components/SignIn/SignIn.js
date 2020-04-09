@@ -10,7 +10,7 @@ class SignUp extends React.Component {
     this.state = {
       email: "",
       password: "",
-      redirect: false
+      redirect: false,
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updatePasswordField = this.updatePasswordField.bind(this);
@@ -36,20 +36,20 @@ class SignUp extends React.Component {
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     // console.log(`A form was submitted ${JSON.stringify(this.state)}`);
     e.preventDefault();
     fetch("/auth/signin", {
       method: "POST",
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       }),
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(this.state),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        (res) => this.setState({ flash: res.flash }),
+        (err) => this.setState({ flash: err.flash })
       );
     this.setState({ open: false });
   };
