@@ -10,12 +10,12 @@ class SignUp extends React.Component {
     super(props);
     this.state = {
       name: "",
-      lastName: "",
+      lastname: "",
       password: "",
       passwordConf: "",
       email: "",
       flash: "",
-      signup: false
+      signup: false,
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updateNameField = this.updateNameField.bind(this);
@@ -30,7 +30,7 @@ class SignUp extends React.Component {
   }
 
   updateLastNameField(e) {
-    this.setState({ lastName: e.target.value });
+    this.setState({ lastname: e.target.value });
   }
 
   updatePasswordField(e) {
@@ -45,9 +45,9 @@ class SignUp extends React.Component {
     this.setState({ email: e.target.value });
   }
 
-  setSignUp = () => {
-    this.setState({ signup: true });
-  };
+  // setSignUp = () => {
+  //   this.setState({ signup: true });
+  // };
 
   renderSignUp = () => {
     if (this.state.signup) {
@@ -55,22 +55,23 @@ class SignUp extends React.Component {
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     // console.log(`A form was submitted ${JSON.stringify(this.state)}`);
     e.preventDefault();
     fetch("/auth/signup", {
       method: "POST",
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       }),
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(this.state),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        (res) => this.setState({ flash: res.flash }),
+        (err) => this.setState({ flash: err.flash })
       );
     this.setState({ open: false });
+    this.setState({ signup: true });
   };
 
   render() {
@@ -98,7 +99,7 @@ class SignUp extends React.Component {
                 type="text"
                 name="lastName"
                 fullWidth
-                value={this.state.lastName}
+                value={this.state.lastname}
                 onChange={this.updateLastNameField}
               />
             </div>
@@ -142,7 +143,7 @@ class SignUp extends React.Component {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={this.setSignUp}
+                onClick={this.handleSubmit}
               >
                 Submit
               </Button>
