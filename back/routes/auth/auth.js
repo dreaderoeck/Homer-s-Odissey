@@ -23,7 +23,7 @@ router.post("/signup", function (req, res, next) {
         console.log(error);
         res.status(500).json({ flash: error.message });
       } else {
-        res.status(200).send(user);
+        res.status(200).send({ user, flash: "User has signed up" });
         res.end();
       }
     }
@@ -45,7 +45,7 @@ router.post("/signin", (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    return res.status(200).send({ user, token });
+    return res.status(200).send({ user, token, message: "User has signed in" });
   })(req, res, next);
 });
 

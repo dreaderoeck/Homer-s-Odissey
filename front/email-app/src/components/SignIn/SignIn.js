@@ -2,14 +2,16 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link, Redirect } from "react-router-dom";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 import "../SignUp/signup.css";
 
-class SignUp extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
       password: "",
+      message: "",
       redirect: false,
     };
     this.updateEmailField = this.updateEmailField.bind(this);
@@ -48,8 +50,8 @@ class SignUp extends React.Component {
     })
       .then((res) => res.json())
       .then(
-        (res) => this.setState({ flash: res.flash }),
-        (err) => this.setState({ flash: err.flash })
+        (res) => this.setState({ flash: res.message }),
+        (err) => this.setState({ flash: err.message })
       );
     this.setState({ open: false });
   };
@@ -101,9 +103,18 @@ class SignUp extends React.Component {
             </div>
           </form>
         </div>
+        <div className="snackbarstyle">
+          {/* {this.state.message && <p>{this.state.message}</p>} */}
+          {this.state.message && (
+            <SnackbarContent
+              anchorOrigin={"bottom, center"}
+              message={this.state.message}
+            />
+          )}
+        </div>
       </div>
     );
   }
 }
 
-export default SignUp;
+export default SignIn;
