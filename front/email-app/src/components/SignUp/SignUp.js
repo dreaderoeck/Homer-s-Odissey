@@ -1,4 +1,9 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import "./signup.css";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -9,7 +14,8 @@ class SignUp extends React.Component {
       password: "",
       passwordConf: "",
       email: "",
-      flash: ""
+      flash: "",
+      signup: false,
     };
     this.updateEmailField = this.updateEmailField.bind(this);
     this.updateNameField = this.updateNameField.bind(this);
@@ -24,7 +30,7 @@ class SignUp extends React.Component {
   }
 
   updateLastNameField(e) {
-    this.setState({ lastName: e.target.value });
+    this.setState({ lastname: e.target.value });
   }
 
   updatePasswordField(e) {
@@ -39,72 +45,128 @@ class SignUp extends React.Component {
     this.setState({ email: e.target.value });
   }
 
-  handleSubmit = e => {
+  // setSignUp = () => {
+  //   this.setState({ signup: true });
+  // };
+
+  renderSignUp = () => {
+    if (this.state.signup) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  handleSubmit = (e) => {
     // console.log(`A form was submitted ${JSON.stringify(this.state)}`);
     e.preventDefault();
     fetch("/auth/signup", {
       method: "POST",
       headers: new Headers({
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       }),
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(this.state),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
-        res => this.setState({ flash: res.flash }),
-        err => this.setState({ flash: err.flash })
+        (res) => this.setState({ flash: res.flash }),
+        (err) => this.setState({ flash: err.flash })
       );
+    this.setState({ open: false });
+    this.setState({ signup: true });
   };
 
   render() {
     return (
-      <React.Fragment>
-        <h1>{JSON.stringify(this.state)}</h1>
+      <div className="signup-container">
+        <div className="sign-up">
+          <h2>Sign up</h2>
+          <form onSubmit={this.handleSubmit} className="signup-form">
+            <div>
+              <TextField
+                label="Name"
+                id="name"
+                type="text"
+                name="name"
+                fullWidth
+                value={this.state.name}
+                onChange={this.updateNameField}
+              />
+            </div>
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.updateNameField}
-          />
+            <div>
+              <TextField
+                label="Last Name"
+                id="lastName"
+                type="text"
+                name="lastname"
+                fullWidth
+                value={this.state.lastname}
+                onChange={this.updateLastNameField}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Password"
+                id="password"
+                type="password"
+                name="password"
+                fullWidth
+                value={this.state.password}
+                onChange={this.updatePasswordField}
+              />
+            </div>
 
-          <input
-            id="lastName"
-            type="text"
-            name="lastname"
-            value={this.state.lastname}
-            onChange={this.updateLastNameField}
-          />
+            <div>
+              <TextField
+                label="Password Confirmed"
+                id="passwordConf"
+                type="password"
+                name="passwordConf"
+                fullWidth
+                value={this.state.passwordConf}
+                onChange={this.updatePasswordConfField}
+              />
+            </div>
 
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.updatePasswordField}
-          />
+            <div>
+              <TextField
+                label="Email"
+                id="email"
+                type="email"
+                name="email"
+                fullWidth
+                value={this.state.email}
+                onChange={this.updateEmailField}
+              />
+            </div>
+            <div className="buttonstyle">
+              {this.renderSignUp()}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
 
-          <input
-            id="passwordConf"
-            type="password"
-            name="passwordConf"
-            value={this.state.passwordConf}
-            onChange={this.updatePasswordConfField}
-          />
+            <div className="buttonstyle">
+              <Button variant="contained" color="secondary">
+                <Link to="/signin">Sign in!!</Link>
+              </Button>
+            </div>
+          </form>
+        </div>
 
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={this.updateEmailField}
-          />
-          <input type="submit" value="Submit" />
-        </form>
-        {this.state.flash && <p>{this.state.flash}</p>}
-      </React.Fragment>
+        <div className="snackbarstyle">
+          {/* {this.state.flash && <p>{this.state.flash}</p>} */}
+          {this.state.flash && (
+            <SnackbarContent
+              anchorOrigin={"bottom, center"}
+              message={this.state.flash}
+            />
+          )}
+        </div>
+      </div>
     );
   }
 }
