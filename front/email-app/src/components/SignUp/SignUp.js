@@ -97,7 +97,7 @@ class SignUp extends React.Component {
                 label="Last Name"
                 id="lastName"
                 type="text"
-                name="lastName"
+                name="lastname"
                 fullWidth
                 value={this.state.lastname}
                 onChange={this.updateLastNameField}
