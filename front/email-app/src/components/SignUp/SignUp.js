@@ -5,7 +5,7 @@ class SignUp extends React.Component {
     super(props);
     this.state = {
       name: "",
-      lastName: "",
+      lastname: "",
       password: "",
       passwordConf: "",
       email: "",
@@ -73,8 +73,8 @@ class SignUp extends React.Component {
           <input
             id="lastName"
             type="text"
-            name="lastName"
-            value={this.state.lastName}
+            name="lastname"
+            value={this.state.lastname}
             onChange={this.updateLastNameField}
           />
 
